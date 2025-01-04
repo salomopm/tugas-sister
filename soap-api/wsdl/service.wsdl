@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://example.com/soap"
+             xmlns:tns="http://example.com/soap">
+
+    <!-- Types -->
+    <types>
+        <xsd:schema targetNamespace="http://example.com/soap">
+            <xsd:complexType name="DataRequest">
+                <xsd:sequence>
+                    <xsd:element name="nim" type="xsd:string"/>
+                    <xsd:element name="nama" type="xsd:string"/>
+                    <xsd:element name="umur" type="xsd:int"/>
+                    <xsd:element name="tinggi" type="xsd:int"/>
+                    <xsd:element name="hobi" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="DataResponse">
+                <xsd:sequence>
+                    <xsd:element name="message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="ReadResponse">
+                <xsd:sequence>
+                    <xsd:element name="data" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:complexType name="IdRequest">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+
+    <!-- Message Definitions -->
+    <message name="CreateRequest">
+        <part name="data" element="tns:DataRequest"/>
+    </message>
+
+    <message name="CreateResponse">
+        <part name="response" element="tns:DataResponse"/>
+    </message>
+
+    <message name="ReadRequest">
+        <part name="id" element="tns:IdRequest"/>
+    </message>
+
+    <message name="ReadResponse">
+        <part name="response" element="tns:ReadResponse"/>
+    </message>
+
+    <message name="UpdateRequest">
+        <part name="id" element="tns:IdRequest"/>
+        <part name="data" element="tns:DataRequest"/>
+    </message>
+
+    <message name="UpdateResponse">
+        <part name="response" element="tns:DataResponse"/>
+    </message>
+
+    <message name="DeleteRequest">
+        <part name="id" element="tns:IdRequest"/>
+    </message>
+
+    <message name="DeleteResponse">
+        <part name="response" element="tns:DataResponse"/>
+    </message>
+
+    <!-- Port Type Definitions -->
+    <portType name="CRUDServicePortType">
+        <operation name="create">
+            <input message="tns:CreateRequest"/>
+            <output message="tns:CreateResponse"/>
+        </operation>
+
+        <operation name="read">
+            <input message="tns:ReadRequest"/>
+            <output message="tns:ReadResponse"/>
+        </operation>
+
+        <operation name="update">
+            <input message="tns:UpdateRequest"/>
+            <output message="tns:UpdateResponse"/>
+        </operation>
+
+        <operation name="delete">
+            <input message="tns:DeleteRequest"/>
+            <output message="tns:DeleteResponse"/>
+        </operation>
+    </portType>
+
+    <!-- Binding Definitions -->
+    <binding name="CRUDServiceBinding" type="tns:CRUDServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        
+        <operation name="create">
+            <soap:operation soapAction="http://example.com/soap/create"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="read">
+            <soap:operation soapAction="http://example.com/soap/read"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="update">
+            <soap:operation soapAction="http://example.com/soap/update"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="delete">
+            <soap:operation soapAction="http://example.com/soap/delete"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Service Definitions -->
+    <service name="CRUDService">
+        <port name="CRUDServicePort" binding="tns:CRUDServiceBinding">
+            <soap:address location="http://localhost:3000/soap"/>
+        </port>
+    </service>
+
+</definitions>
